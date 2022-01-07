@@ -17,7 +17,7 @@
         <Menu text="File">
             <items>
                 <MenuItem text="Open" onAction="#openFile"/>
-                <MenuItem text="Save"/>
+                <MenuItem text="Save" onAction="#saveFile"/>
                 <MenuItem text="Quit" onAction="#quit"/>
             </items>
         </Menu>

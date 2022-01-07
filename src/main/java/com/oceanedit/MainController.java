@@ -15,9 +15,6 @@ import java.util.Scanner;
 
 public class MainController {
     @FXML
-    private Label welcomeText;
-
-    @FXML
     private MenuBar menuBar;
 
     @FXML
@@ -41,11 +38,25 @@ public class MainController {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Select file");
             File file = fileChooser.showOpenDialog(mainArea.getScene().getWindow());
-            String data = FileOperations.ReadFile(file);
+            String data = FileOperations.readFile(file);
             mainArea.setText(data);
-        } catch (IOException fnEx)
+        }
+        catch (IOException ioEx)
         {
-            fnEx.printStackTrace();
+            ioEx.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void saveFile() {
+        try {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Select file;");
+            File file = fileChooser.showSaveDialog(mainArea.getScene().getWindow());
+            FileOperations.writeFile(file, mainArea.getText());
+        }
+        catch (IOException ioEx) {
+            ioEx.printStackTrace();
         }
     }
 
