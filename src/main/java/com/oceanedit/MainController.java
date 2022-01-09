@@ -6,24 +6,32 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.TextArea;
+import javafx.scene.input.KeyCode;
 import javafx.stage.FileChooser;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Controller for main window.
+ */
 public class MainController {
+    // Main menu bar.
     @FXML
     private MenuBar menuBar;
 
+    // Line number area.
     @FXML
     private TextArea lineNumberArea;
 
+    // Main text area.
     @FXML
     private TextArea mainArea;
 
+    /**
+     * Initializer method.
+     */
     @FXML
     public void initialize() {
         final String os = System.getProperty("os.name");
@@ -31,8 +39,13 @@ public class MainController {
             menuBar.setUseSystemMenuBar(true);
         }
         lineNumberArea.setEditable(false);
+        setLineNumbers(1);
+        setEvents();
     }
 
+    /**
+     * Opens file in the editor.
+     */
     @FXML
     public void openFile() {
         try {
@@ -41,6 +54,7 @@ public class MainController {
             File file = fileChooser.showOpenDialog(mainArea.getScene().getWindow());
             String data = FileOperations.readFile(file);
             mainArea.setText(data);
+            setLineNumbers(getLineCount());
         }
         catch (IOException ioEx)
         {
@@ -48,6 +62,9 @@ public class MainController {
         }
     }
 
+    /**
+     * Opens file chooser and saves file.
+     */
     @FXML
     public void saveFile() {
         try {
@@ -61,16 +78,25 @@ public class MainController {
         }
     }
 
+    /**
+     * Executes copy operation.
+     */
     @FXML
     public void copyOperation() {
         mainArea.copy();
     }
 
+    /**
+     * Executes paste operation.
+     */
     @FXML
     public void pasteOperation() {
         mainArea.paste();
     }
 
+    /**
+     * Opens about window.
+     */
     @FXML
     public void openAboutWindow() {
         try {
@@ -86,8 +112,44 @@ public class MainController {
         }
     }
 
+    /**
+     * Quits the application.
+     */
     @FXML
     public void quit() {
         System.exit(0);
+    }
+
+    private void setEvents() {
+        mainArea.setOnKeyPressed(event -> {
+            if (event.getCode().equals(KeyCode.ENTER)) {
+                setLineNumbers(getLineCount());
+            }
+            else if (event.getCode().equals(KeyCode.BACK_SPACE)) {
+                setLineNumbers(getLineCount());
+            }
+        });
+    }
+
+    private void setLineNumbers(long numberOfLines) {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < numberOfLines; i++) {
+            builder.append(String.format("%d\n", i + 1 ));
+        }
+        lineNumberArea.setText(builder.toString());
+        sizeTextAreaToText();
+    }
+
+    private long getLineCount() {
+        return mainArea.getText().chars().filter(ch -> ch == '\n').count() + 1;
+    }
+
+    private void sizeTextAreaToText() {
+        if (getLineCount() > 10) {
+            this.lineNumberArea.setMaxWidth(40);
+        }
+        else if (getLineCount() > 100) {
+            this.lineNumberArea.setMaxWidth(45);
+        }
     }
 }

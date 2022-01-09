@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <VBox spacing="20.0" xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.oceanedit.MainController">
     <MenuBar fx:id="menuBar">
@@ -29,7 +25,7 @@
         </Menu>
     </MenuBar>
     <HBox VBox.vgrow="ALWAYS">
-        <TextArea maxWidth="30" minWidth="30" fx:id="lineNumberArea"/>
+        <TextArea HBox.hgrow="ALWAYS" minWidth="0" maxWidth="0" visible="false" fx:id="lineNumberArea"/>
         <TextArea HBox.hgrow="ALWAYS" fx:id="mainArea"/>
     </HBox>
 </VBox>
