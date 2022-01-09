@@ -1,5 +1,6 @@
-package com.oceanedit;
+package com.oceanedit.Controllers;
 
+import com.oceanedit.FileOperations;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -137,7 +138,7 @@ public class MainController {
             builder.append(String.format("%d\n", i + 1 ));
         }
         this.lineNumberArea.setText(builder.toString());
-        sizeTextAreaToText();
+        // sizeTextAreaToText();
     }
 
     private long getLineCount() {

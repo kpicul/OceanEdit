@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <VBox spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.oceanedit.MainController">
+      fx:controller="com.oceanedit.Controllers.MainController">
     <MenuBar fx:id="menuBar">
         <Menu text="File">
             <items>
