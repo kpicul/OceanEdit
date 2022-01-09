@@ -36,9 +36,9 @@ public class MainController {
     public void initialize() {
         final String os = System.getProperty("os.name");
         if (os != null && os.startsWith("Mac")) {
-            menuBar.setUseSystemMenuBar(true);
+            this.menuBar.setUseSystemMenuBar(true);
         }
-        lineNumberArea.setEditable(false);
+        this.lineNumberArea.setEditable(false);
         setLineNumbers(1);
         setEvents();
     }
@@ -51,9 +51,9 @@ public class MainController {
         try {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Select file");
-            File file = fileChooser.showOpenDialog(mainArea.getScene().getWindow());
+            File file = fileChooser.showOpenDialog(this.mainArea.getScene().getWindow());
             String data = FileOperations.readFile(file);
-            mainArea.setText(data);
+            this.mainArea.setText(data);
             setLineNumbers(getLineCount());
         }
         catch (IOException ioEx)
@@ -70,8 +70,8 @@ public class MainController {
         try {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Select file;");
-            File file = fileChooser.showSaveDialog(mainArea.getScene().getWindow());
-            FileOperations.writeFile(file, mainArea.getText());
+            File file = fileChooser.showSaveDialog(this.mainArea.getScene().getWindow());
+            FileOperations.writeFile(file, this.mainArea.getText());
         }
         catch (IOException ioEx) {
             ioEx.printStackTrace();
@@ -83,7 +83,7 @@ public class MainController {
      */
     @FXML
     public void copyOperation() {
-        mainArea.copy();
+        this.mainArea.copy();
     }
 
     /**
@@ -91,7 +91,7 @@ public class MainController {
      */
     @FXML
     public void pasteOperation() {
-        mainArea.paste();
+        this.mainArea.paste();
     }
 
     /**
@@ -136,12 +136,12 @@ public class MainController {
         for (int i = 0; i < numberOfLines; i++) {
             builder.append(String.format("%d\n", i + 1 ));
         }
-        lineNumberArea.setText(builder.toString());
+        this.lineNumberArea.setText(builder.toString());
         sizeTextAreaToText();
     }
 
     private long getLineCount() {
-        return mainArea.getText().chars().filter(ch -> ch == '\n').count() + 1;
+        return this.mainArea.getText().chars().filter(ch -> ch == '\n').count() + 1;
     }
 
     private void sizeTextAreaToText() {
