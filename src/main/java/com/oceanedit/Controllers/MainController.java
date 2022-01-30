@@ -13,14 +13,13 @@
 
 package com.oceanedit.Controllers;
 
-import com.oceanedit.FileOperations;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuBar;
-import javafx.scene.control.TextArea;
-import javafx.scene.input.KeyCode;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -37,7 +36,7 @@ public class MainController {
 
     // Line number area.
     @FXML
-    private Editor editor;
+    private TabPane editorTabs;
 
     /**
      * Initializer method.
@@ -48,6 +47,7 @@ public class MainController {
         if (os != null && os.startsWith("Mac")) {
             this.menuBar.setUseSystemMenuBar(true);
         }
+        addNewTab("new file");
     }
 
     /**
@@ -59,7 +59,8 @@ public class MainController {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Select file");
             File file = fileChooser.showOpenDialog(this.menuBar.getScene().getWindow());
-            this.editor.openFile(file);
+            this.getSelectedEditor().openFile(file);
+            this.editorTabs.getSelectionModel().getSelectedItem().setText(file.getAbsolutePath());
         }
         catch (IOException ioEx)
         {
@@ -76,7 +77,7 @@ public class MainController {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Select file;");
             File file = fileChooser.showSaveDialog(this.menuBar.getScene().getWindow());
-            this.editor.saveCurrentFile();
+            this.getSelectedEditor().saveCurrentFile();
         }
         catch (IOException ioEx) {
             ioEx.printStackTrace();
@@ -88,7 +89,7 @@ public class MainController {
      */
     @FXML
     public void copyOperation() {
-        this.editor.copyOperation();
+        this.getSelectedEditor().copyOperation();
     }
 
     /**
@@ -96,7 +97,7 @@ public class MainController {
      */
     @FXML
     public void pasteOperation() {
-        this.editor.pasteOperation();
+        this.getSelectedEditor().pasteOperation();
     }
 
     /**
@@ -123,5 +124,15 @@ public class MainController {
     @FXML
     public void quit() {
         System.exit(0);
+    }
+
+    private Tab addNewTab(String tabName){
+        Tab tab = new Tab(tabName, new Editor());
+        this.editorTabs.getTabs().add(tab);
+        return tab;
+    }
+
+    private Editor getSelectedEditor() {
+        return (Editor) this.editorTabs.getSelectionModel().getSelectedItem().getContent();
     }
 }
