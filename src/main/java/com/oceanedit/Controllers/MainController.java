@@ -13,6 +13,7 @@
 
 package com.oceanedit.Controllers;
 
+import com.oceanedit.FileOperations;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -59,8 +60,10 @@ public class MainController {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Select file");
             File file = fileChooser.showOpenDialog(this.menuBar.getScene().getWindow());
+            Tab newTab = addNewTab(file.getName());
+            this.editorTabs.getSelectionModel().select(newTab);
             this.getSelectedEditor().openFile(file);
-            this.editorTabs.getSelectionModel().getSelectedItem().setText(file.getAbsolutePath());
+            // this.editorTabs.getSelectionModel().getSelectedItem().setText(file.getAbsolutePath());
         }
         catch (IOException ioEx)
         {
@@ -74,10 +77,21 @@ public class MainController {
     @FXML
     public void saveFile() {
         try {
+            this.getSelectedEditor().saveCurrentFile();
+        }
+        catch (IOException ioEx) {
+            ioEx.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void saveFileAs() {
+        try {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Select file;");
             File file = fileChooser.showSaveDialog(this.menuBar.getScene().getWindow());
-            this.getSelectedEditor().saveCurrentFile();
+            FileOperations.writeFile(file, getSelectedEditor().getText());
+            this.editorTabs.getSelectionModel().getSelectedItem().setText(file.getName());
         }
         catch (IOException ioEx) {
             ioEx.printStackTrace();
@@ -116,6 +130,12 @@ public class MainController {
         catch (IOException ioEx) {
             ioEx.printStackTrace();
         }
+    }
+
+    @FXML
+    public void addNewEditorTab() {
+        Tab newTab = addNewTab("New File");
+        this.editorTabs.getSelectionModel().select(newTab);
     }
 
     /**

@@ -73,6 +73,14 @@ public class Editor extends HBox {
         this.mainArea.paste();
     }
 
+    /**
+     * Gets the text from the editoeß
+     * @return the text from current editor.
+     */
+    public String getText() {
+        return this.mainArea.getText();
+    }
+
     public boolean fileAlreadyExists() {
         return this.file != null;
     }

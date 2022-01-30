@@ -23,7 +23,10 @@
             <items>
                 <MenuItem text="Open" onAction="#openFile"/>
                 <MenuItem text="Save" onAction="#saveFile"/>
-                <MenuItem text="Save As" />
+                <MenuItem text="Save As" onAction="#saveFileAs"/>
+                <SeparatorMenuItem />
+                <MenuItem text="New Tab" onAction="#addNewEditorTab"/>
+                <SeparatorMenuItem />
                 <MenuItem text="Quit" onAction="#quit"/>
             </items>
         </Menu>
