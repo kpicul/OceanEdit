@@ -18,6 +18,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -38,6 +39,12 @@ public class MainController {
     // Line number area.
     @FXML
     private TabPane editorTabs;
+
+    @FXML
+    private Label lineNumber;
+
+    @FXML
+    private Label columnNumber;
 
     /**
      * Initializer method.

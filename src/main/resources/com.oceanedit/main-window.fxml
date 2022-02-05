@@ -16,7 +16,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox spacing="20.0" xmlns:fx="http://javafx.com/fxml"
+<VBox xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.oceanedit.Controllers.MainController">
     <MenuBar fx:id="menuBar">
         <Menu text="File">
@@ -43,4 +43,10 @@
         </Menu>
     </MenuBar>
     <TabPane fx:id="editorTabs" VBox.vgrow="ALWAYS"/>
+    <HBox spacing="3" VBox.vgrow="ALWAYS" minHeight="30" maxHeight="30">
+        <Label text="Line:"/>
+        <Label fx:id="lineNumber" text="0"/>
+        <Label text="Column:"/>
+        <Label fx:id="columnNumber" text="0"/>
+    </HBox>
 </VBox>

@@ -16,6 +16,7 @@ module com.oceanedit {
     requires javafx.fxml;
 
     requires com.dlsc.formsfx;
+    requires org.fxmisc.richtext;
 
     opens com.oceanedit to javafx.fxml;
     exports com.oceanedit;

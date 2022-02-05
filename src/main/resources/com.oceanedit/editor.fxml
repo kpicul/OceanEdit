@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import org.fxmisc.richtext.CodeArea?>
 <fx:root type="javafx.scene.layout.HBox" xmlns:fx="http://javafx.com/fxml">
-    <TextArea HBox.hgrow="ALWAYS" minWidth="0" maxWidth="0" visible="false" fx:id="lineNumberArea"/>
-    <TextArea HBox.hgrow="ALWAYS" fx:id="mainArea"/>
+    <CodeArea HBox.hgrow="ALWAYS" fx:id="mainArea" />
 </fx:root>

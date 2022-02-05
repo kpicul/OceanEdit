@@ -9,14 +9,14 @@ import javafx.scene.layout.HBox;
 import java.io.File;
 import java.io.IOException;
 
-public class Editor extends HBox {
-    // Line number area.
-    @FXML
-    private TextArea lineNumberArea;
+import org.fxmisc.richtext.CodeArea;
+import org.fxmisc.richtext.LineNumberFactory;
 
+
+public class Editor extends HBox {
     // Main text area.
     @FXML
-    private TextArea mainArea;
+    private CodeArea mainArea;
 
     private File file;
 
@@ -35,14 +35,7 @@ public class Editor extends HBox {
         }
         saved = false;
         newFile = true;
-    }
-
-    /**
-     * Initializer method.
-     */
-    @FXML
-    public void initialize() {
-        this.lineNumberArea.setEditable(false);
+        mainArea.setParagraphGraphicFactory(LineNumberFactory.get(mainArea));
     }
 
     /**
@@ -50,7 +43,7 @@ public class Editor extends HBox {
      */
     public void openFile(File file) throws IOException{
         String data = FileOperations.readFile(file);
-        this.mainArea.setText(data);
+        this.mainArea.insertText(0,data);
         this.file = file;
         newFile = false;
         saved = true;
