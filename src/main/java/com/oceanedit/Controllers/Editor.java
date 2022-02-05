@@ -20,6 +20,10 @@ public class Editor extends HBox {
 
     private File file;
 
+    private boolean saved;
+
+    private boolean newFile;
+
     public Editor() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com.oceanedit/editor.fxml"));
         fxmlLoader.setRoot(this);
@@ -29,6 +33,8 @@ public class Editor extends HBox {
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
+        saved = false;
+        newFile = true;
     }
 
     /**
@@ -46,6 +52,8 @@ public class Editor extends HBox {
         String data = FileOperations.readFile(file);
         this.mainArea.setText(data);
         this.file = file;
+        newFile = false;
+        saved = true;
     }
 
     /**
@@ -57,6 +65,7 @@ public class Editor extends HBox {
 
     public void saveCurrentFile() throws IOException {
         FileOperations.writeFile(this.file, this.mainArea.getText());
+        saved = true;
     }
 
     /**
@@ -79,6 +88,10 @@ public class Editor extends HBox {
      */
     public String getText() {
         return this.mainArea.getText();
+    }
+
+    public boolean isNewFile() {
+        return this.newFile;
     }
 
     public boolean fileAlreadyExists() {

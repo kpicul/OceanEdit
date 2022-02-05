@@ -63,7 +63,6 @@ public class MainController {
             Tab newTab = addNewTab(file.getName());
             this.editorTabs.getSelectionModel().select(newTab);
             this.getSelectedEditor().openFile(file);
-            // this.editorTabs.getSelectionModel().getSelectedItem().setText(file.getAbsolutePath());
         }
         catch (IOException ioEx)
         {
@@ -77,7 +76,12 @@ public class MainController {
     @FXML
     public void saveFile() {
         try {
-            this.getSelectedEditor().saveCurrentFile();
+            if (this.getSelectedEditor().isNewFile()) {
+                saveFileAs();
+            }
+            else {
+                this.getSelectedEditor().saveCurrentFile();
+            }
         }
         catch (IOException ioEx) {
             ioEx.printStackTrace();
@@ -132,6 +136,9 @@ public class MainController {
         }
     }
 
+    /**
+     * Adds new editor tab.
+     */
     @FXML
     public void addNewEditorTab() {
         Tab newTab = addNewTab("New File");
