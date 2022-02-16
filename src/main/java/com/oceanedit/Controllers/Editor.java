@@ -3,7 +3,6 @@ package com.oceanedit.Controllers;
 import com.oceanedit.FileOperations;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 
 import java.io.File;
@@ -11,6 +10,9 @@ import java.io.IOException;
 
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.LineNumberFactory;
+import org.fxmisc.richtext.model.TwoDimensional.Position;
+import org.fxmisc.richtext.model.TwoDimensional.Bias;
+
 
 
 public class Editor extends HBox {
@@ -76,7 +78,7 @@ public class Editor extends HBox {
     }
 
     /**
-     * Gets the text from the editoeß
+     * Gets the text from the editor
      * @return the text from current editor.
      */
     public String getText() {
@@ -87,7 +89,17 @@ public class Editor extends HBox {
         return this.newFile;
     }
 
-    public boolean fileAlreadyExists() {
-        return this.file != null;
+    public int getRowNumber() {
+        return getPosition().getMajor() + 1;
+    }
+
+    public int getColumnNumber() {
+        return getPosition().getMinor() + 1;
+    }
+
+    private Position getPosition() {
+        int offset = mainArea.getCaretPosition();
+
+        return mainArea.offsetToPosition(offset, Bias.Backward);
     }
 }

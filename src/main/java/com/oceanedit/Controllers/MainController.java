@@ -22,8 +22,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.fxmisc.richtext.CodeArea;
 
 import java.io.File;
 import java.io.IOException;
@@ -56,6 +59,8 @@ public class MainController {
             this.menuBar.setUseSystemMenuBar(true);
         }
         addNewTab("new file");
+        setNumberData();
+        setCodeKeyEvent(getSelectedEditor());
     }
 
     /**
@@ -161,12 +166,27 @@ public class MainController {
     }
 
     private Tab addNewTab(String tabName){
-        Tab tab = new Tab(tabName, new Editor());
+        Editor newEditor = new Editor();
+        setCodeKeyEvent(newEditor);
+        Tab tab = new Tab(tabName, newEditor);
         this.editorTabs.getTabs().add(tab);
         return tab;
     }
 
     private Editor getSelectedEditor() {
         return (Editor) this.editorTabs.getSelectionModel().getSelectedItem().getContent();
+    }
+
+    private void setNumberData() {
+        int lineNumber = getSelectedEditor().getRowNumber();
+        int columnNumber = getSelectedEditor().getColumnNumber();
+        this.lineNumber.setText(Integer.toString(lineNumber));
+        this.columnNumber.setText(Integer.toString(columnNumber));
+    }
+
+    private void setCodeKeyEvent(Editor editor) {
+        editor.setOnKeyPressed(e -> setNumberData());
+        editor.setOnMouseClicked(e -> setNumberData());
+        editor.setOnKeyReleased(e -> setNumberData());
     }
 }
